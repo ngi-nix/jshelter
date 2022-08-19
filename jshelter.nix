@@ -2,6 +2,10 @@
   lib,
   stdenv,
   doxygen,
+  graphviz,
+  nodejs,
+  zip,
+  fetchFromGitHub,
   fetchurl,
   fetchzip,
 }: let
@@ -13,6 +17,12 @@
     url = "https://www.iana.org/assignments/locally-served-dns-zones/ipv6.csv";
     hash = "sha256-9ImunHzGKDZACTknDe86EwUHZv2DS1g9U+ofDC3Pa20=";
   };
+  nscl = fetchFromGitHub {
+    owner = "hackademix";
+    repo = "nscl";
+    rev = "cead3ec8eabae1638432011335cd914b91124b50";
+    hash = "sha256-XdmV4at/+TQ97ToZYg/M9amkT2AlnZjEJmozVz2I1iI=";
+  };
 in
   stdenv.mkDerivation rec {
     pname = "jshelter";
@@ -23,7 +33,21 @@ in
       hash = "sha256-QZCJmur6fHcLWKmNs1pSpXQBfXqawu+2hQUlq9uEDc4=";
     };
 
-    nativeBuildInputs = [doxygen];
+    nativeBuildInputs = [doxygen graphviz nodejs zip];
+
+    # we copy instead of link as sed will try to write temp files in there
+    postUnpack = ''
+      rm -rf source/nscl
+      cp -r ${nscl} source/nscl
+      chmod -R +w source/nscl
+    '';
+
+    # we get submodules and CSV using FOD
+    postPatch = ''
+      patchShebangs fix_manifest.sh generate_fpd.sh nscl/include.sh
+      substituteInPlace Makefile \
+        --replace '$(COMMON_FILES) get_csv submodules' '$(COMMON_FILES)'
+    '';
 
     preBuild = ''
       cp ${ipv4csv} common/ipv4.dat
