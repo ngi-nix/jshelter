@@ -66,7 +66,14 @@ in
     meta = with lib; {
       description = "An anti-malware Web browser extension to mitigate potential threats from JavaScript, including fingerprinting, tracking, and data collection";
       homepage = "https://jshelter.org";
-      license = licenses.gpl3Plus;
+      license = with licenses; [
+        cc0
+        cc-by-40
+        fdl13Plus
+        gpl3Plus
+        mit
+        mpl20
+      ]; # + CC-BY-ND-4.0
       platforms = platforms.unix;
       maintainers = with maintainers; [fufexan];
     };
