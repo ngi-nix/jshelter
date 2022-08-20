@@ -61,21 +61,11 @@ in
       cp ${ipv6csv} common/ipv6.dat
     '';
 
-    # override wget fetching
-    buildPhase = ''
-      runHook preBuild
-
-      make firefox chrome clean docs
-
-      runHook postBuild
-    '';
-
     installPhase = ''
       runHook preInstall
 
       mkdir -p $out/share/jshelter
-      cp -r chrome $out/share/jshelter/
-      cp jshelter_firefox.zip $out/share/jshelter/
+      cp jshelter_{chrome,firefox}.zip $out/share/jshelter/
 
       runHook postInstall
     '';
