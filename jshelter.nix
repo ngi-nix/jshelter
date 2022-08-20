@@ -70,6 +70,16 @@ in
       runHook postBuild
     '';
 
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/share/jshelter
+      cp -r chrome $out/share/jshelter/
+      cp jshelter_firefox.zip $out/share/jshelter/
+
+      runHook postInstall
+    '';
+
     meta = with lib; {
       description = "An anti-malware Web browser extension to mitigate potential threats from JavaScript, including fingerprinting, tracking, and data collection";
       homepage = "https://jshelter.org";
