@@ -2,7 +2,9 @@
   lib,
   stdenv,
   doxygen,
+  freefont_ttf,
   graphviz,
+  makeFontsConf,
   nodejs,
   zip,
   fetchFromGitHub,
@@ -34,6 +36,11 @@ in
     };
 
     nativeBuildInputs = [doxygen graphviz nodejs zip];
+
+    # Fontconfig error: Cannot load default config file
+    FONTCONFIG_FILE = makeFontsConf {
+      fontDirectories = [freefont_ttf];
+    };
 
     # we copy instead of link as sed will try to write temp files in there
     postUnpack = ''
