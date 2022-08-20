@@ -14,11 +14,14 @@ workingdir=$PWD
 tmpdir=$(mktemp -d)
 cd $tmpdir
 
+git clone https://pagure.io/JShelter/webextension
+cd webextension
+
 if [ -z "$version" ]; then
-  git clone https://pagure.io/JShelter/webextension
-  cd webextension
   version=$(git tag -l --sort=committerdate | tail -1)
 fi
+
+git checkout $version
 
 hash=$(nix-prefetch-url "https://pagure.io/JShelter/webextension/archive/${version}/webextension-${version}.zip" --unpack)
 

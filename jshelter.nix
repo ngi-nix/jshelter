@@ -11,6 +11,8 @@
   fetchurl,
   fetchzip,
 }: let
+  pin = builtins.fromJSON (builtins.readFile ./pin.json);
+
   ipv4csv = fetchurl {
     url = "https://www.iana.org/assignments/locally-served-dns-zones/ipv4.csv";
     hash = "sha256-NYsxbG0WecF0+BO7hFlgmAACtDfL8P5PB556Z8iarms=";
@@ -22,17 +24,17 @@
   nscl = fetchFromGitHub {
     owner = "hackademix";
     repo = "nscl";
-    rev = "cead3ec8eabae1638432011335cd914b91124b50";
-    hash = "sha256-XdmV4at/+TQ97ToZYg/M9amkT2AlnZjEJmozVz2I1iI=";
+    rev = pin.nsclRev;
+    sha256 = pin.nsclHash;
   };
 in
   stdenv.mkDerivation rec {
     pname = "jshelter";
-    version = "0.11.1";
+    version = pin.version;
 
     src = fetchzip {
       url = "https://pagure.io/JShelter/webextension/archive/${version}/webextension-${version}.zip";
-      hash = "sha256-QZCJmur6fHcLWKmNs1pSpXQBfXqawu+2hQUlq9uEDc4=";
+      sha256 = pin.hash;
     };
 
     nativeBuildInputs = [doxygen graphviz nodejs zip];
