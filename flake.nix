@@ -32,10 +32,15 @@
         inherit system;
         overlays = [self.overlays.default];
       });
+    mkDate = longDate: (nixpkgs.lib.concatStringsSep "-" [
+      (__substring 0 4 longDate)
+      (__substring 4 2 longDate)
+      (__substring 6 2 longDate)
+    ]);
   in {
     overlays.default = final: prev: {
       jshelter = prev.callPackage ./jshelter.nix {
-        version = "0.11.1";
+        version = mkDate (jshelter.lastModifiedDate or "19700101") + "_" + jshelter.shortRev;
         src = jshelter;
         inherit (inputs) ipv4csv ipv6csv;
       };
