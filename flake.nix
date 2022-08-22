@@ -7,8 +7,6 @@
       url = "https://pagure.io/JShelter/webextension.git";
       type = "git";
       submodules = true;
-      # pagure won't expose refs
-      rev = "1d55d0bfd683560e63a139e6f957e587052728bd";
       flake = false;
     };
     ipv4csv = {

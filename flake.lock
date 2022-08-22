@@ -27,17 +27,16 @@
     "jshelter": {
       "flake": false,
       "locked": {
-        "lastModified": 1652860640,
-        "narHash": "sha256-fdGYOUIkHE8wGt7AiCfmuVrybIFDXSflHVbkAAueoCo=",
+        "lastModified": 1659112208,
+        "narHash": "sha256-sGMRGMilFYvYriw72m+aEJ/1QH0WXQT6p4W0A7IMjFc=",
         "ref": "refs/heads/main",
-        "rev": "1d55d0bfd683560e63a139e6f957e587052728bd",
-        "revCount": 1469,
+        "rev": "30152515dbb7b1d03e036ae3c8c4d0414dc9e4c7",
+        "revCount": 1524,
         "submodules": true,
         "type": "git",
         "url": "https://pagure.io/JShelter/webextension.git"
       },
       "original": {
-        "rev": "1d55d0bfd683560e63a139e6f957e587052728bd",
         "submodules": true,
         "type": "git",
         "url": "https://pagure.io/JShelter/webextension.git"
