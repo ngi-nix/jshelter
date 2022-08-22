@@ -9,14 +9,18 @@
   }: let
     supportedSystems = ["x86_64-linux"];
     genSystems = nixpkgs.lib.genAttrs supportedSystems;
-    pkgsFor = nixpkgs.legacyPackages;
+    pkgsFor = genSystems (system:
+      import nixpkgs {
+        inherit system;
+        overlays = [self.overlays.default];
+      });
   in {
     overlays.default = final: prev: {
       jshelter = prev.callPackage ./jshelter.nix {};
     };
 
     packages = genSystems (system: rec {
-      inherit (self.overlays.default null pkgsFor.${system}) jshelter;
+      inherit (pkgsFor.${system}) jshelter;
       default = jshelter;
     });
   };
