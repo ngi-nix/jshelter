@@ -25,7 +25,7 @@
     jshelter,
     ...
   } @ inputs: let
-    supportedSystems = ["x86_64-linux"];
+    supportedSystems = ["aarch64-darwin" "x86_64-linux"];
     genSystems = nixpkgs.lib.genAttrs supportedSystems;
     pkgsFor = genSystems (system:
       import nixpkgs {
